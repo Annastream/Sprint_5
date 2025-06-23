@@ -33,27 +33,24 @@ class TestCheckingCreationExistingAccount:
         driver.find_element(*Locators.field_email).send_keys(Credential.email)
         # Найди поле "Пароль" и заполни его
         driver.find_element(*Locators.field_password).send_keys(Credential.password)
-          # Жмем на зарегаться
+        # Жмем на зарегаться
         driver.find_element(*Locators.button_login).click()
-             # ждем ошибку регистрации
+        # ждем ошибку регистрации
+        assert WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located(Locators.inscription_error_account))
 
-        assert WebDriverWait(driver, 10).until(EC.visibility_of_element_located(Locators.inscription_error_account))
+    def test_enter_button_personal_area(self, driver):
+        driver.get("https://stellarburgers.nomoreparties.site/")
 
-def test_enter_button_personal_area(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/")
+        driver.find_element(*Locators.button_personal_area).click()
 
+        WebDriverWait(driver, 20).until(EC.url_to_be(login_site))
 
-
-    driver.find_element(*Locators.button_personal_area).click()
-
-    WebDriverWait(driver, 20).until(EC.url_to_be(login_site))
-
-    driver.find_element(*Locators.field_email).send_keys(Credential.email)
-    driver.find_element(*Locators.field_password).send_keys(Credential.password)
-    driver.find_element(*Locators.button_entrance).click()
-    WebDriverWait(driver, 30).until(EC.url_to_be(main_site))
-    assert driver.current_url == main_site
-
+        driver.find_element(*Locators.field_email).send_keys(Credential.email)
+        driver.find_element(*Locators.field_password).send_keys(Credential.password)
+        driver.find_element(*Locators.button_entrance).click()
+        WebDriverWait(driver, 30).until(EC.url_to_be(main_site))
+        assert driver.current_url == main_site
 
 @pytest.mark.usefixture("start_from_main_not_login")
 class TestCheckRegisterNoName:
