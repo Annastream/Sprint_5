@@ -1,0 +1,7 @@
+.*
+**/__pycash__
+.idea/
+.vscode/
+report.html
+geckodriver.log
+
